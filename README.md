@@ -39,7 +39,7 @@ E-commerce payment integration and automated invoicing for two specialty coffee 
 
 Systems-level C++ / Metal work on the Sonic Unleashed static recompilation, used by the community:
 
-- [iOS build — experimental IPA](https://github.com/yorgunkral31/UnleashedRecomp/releases/tag/ios-20261031): launches on iOS 27 with the UIScene lifecycle, fills the screen in landscape, survives lock/unlock and app switching, up to 120 FPS (ProMotion) on iPhone 16 Pro. Built on the port by [@Markos-Th09](https://github.com/Markos-Th09).
+- [iOS build — experimental IPA](https://github.com/yorgunkral31/UnleashedRecomp/releases/tag/ios-20261102): launches on iOS 27 with the UIScene lifecycle, fills the screen in landscape, survives lock/unlock and app switching, touch controls and on-device install, up to 120 FPS (ProMotion) on iPhone 16 Pro. Built on the port by [@Markos-Th09](https://github.com/Markos-Th09).
 - [macOS build (Apple Silicon, native Metal)](https://github.com/yorgunkral31/UnleashedRecomp/releases/tag/metal-20260920), on top of the native Metal backend by [@squidbus](https://github.com/squidbus).
 
 Root-cause fixes on the iOS port, each found on device from crash reports and traces:
