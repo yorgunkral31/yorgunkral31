@@ -39,9 +39,19 @@ E-commerce payment integration and automated invoicing for two specialty coffee 
 
 Systems-level C++ / Metal work on the Sonic Unleashed static recompilation, used by the community:
 
-- [macOS build (Apple Silicon, native Metal)](https://github.com/yorgunkral31/UnleashedRecomp/releases/latest) — downloadable, on top of the native Metal backend by [@squidbus](https://github.com/squidbus)
-- [iOS build — experimental IPA](https://github.com/yorgunkral31/UnleashedRecomp/releases/tag/ios-20260921) — boots reliably, renders correctly, up to 120 FPS (ProMotion) on iPhone 16 Pro; four root-cause fixes on top of the port by [@Markos-Th09](https://github.com/Markos-Th09) ([findings](https://github.com/hedge-dev/UnleashedRecomp/pull/1767))
-- Upstream: crash report and patch for [plume](https://github.com/renderbag/plume/pull/115)'s Metal backend on iOS (landed via [#116](https://github.com/renderbag/plume/pull/116)); testing and fixes for [hedge-dev/UnleashedRecomp](https://github.com/hedge-dev/UnleashedRecomp)
+- [iOS build — experimental IPA](https://github.com/yorgunkral31/UnleashedRecomp/releases/tag/ios-20261031): launches on iOS 27 with the UIScene lifecycle, fills the screen in landscape, survives lock/unlock and app switching, up to 120 FPS (ProMotion) on iPhone 16 Pro. Built on the port by [@Markos-Th09](https://github.com/Markos-Th09).
+- [macOS build (Apple Silicon, native Metal)](https://github.com/yorgunkral31/UnleashedRecomp/releases/tag/metal-20260920), on top of the native Metal backend by [@squidbus](https://github.com/squidbus).
+
+Root-cause fixes on the iOS port, each found on device from crash reports and traces:
+
+- **Crash on every second unlock.** The suspend path drained the GPU after the frame's command list was already open, and the drain submits command list 0, so a frame suspended at index 0 resumed into a closed list and crashed in the driver. Moved the drain before the list is begun; verified over 21 lock/unlock cycles. ([commit](https://github.com/yorgunkral31/UnleashedRecomp/commit/073a6b3))
+- **Image squashed into half the screen.** Measured the view hierarchy on device: SDL's Metal view stayed at its portrait launch size because UIKit never resizes a swapped-in root view. ([commit](https://github.com/yorgunkral31/UnleashedRecomp/commit/29140b6))
+- **Suspend/resume freezes and watchdog kills**, a boot deadlock, and missing game-specific shader logic in the cross-compiled shader recompiler. ([findings](https://github.com/hedge-dev/UnleashedRecomp/pull/1767))
+
+Upstream:
+
+- ProMotion support landed in [Markos-Th09/UnleashedRecomp-iOS](https://github.com/Markos-Th09/UnleashedRecomp-iOS/commit/06026b1) and [Markos-Th09/plume#1](https://github.com/Markos-Th09/plume/pull/1).
+- Crash report and patch for [plume](https://github.com/renderbag/plume/pull/115)'s Metal backend on iOS, landed via [#116](https://github.com/renderbag/plume/pull/116).
 
 ## How I work
 
